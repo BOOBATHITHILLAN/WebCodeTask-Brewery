@@ -21,21 +21,51 @@ async function handlesearch(){
             
             //select row 2
             let Row = document.querySelector(".content-1");
+
+            //Before start empty the row content
             Row.innerHTML="";
             
+            //Filter details based on input
             let Data=BreweryData.filter(BreweryData=>{
 
-                
+                //get Name
                 let BreweryName = DataNullFilter(BreweryData.name);
 
-                //BreweryName convert to lowercase
-                let NameSplit=BreweryName.split("").map(Str=>{                    
-                    if(Str.charCodeAt(0)>=65 || Str.charCodeAt(0)<=90){
-                        return Str.toLowerCase();
-                    }else{
-                        return Str;
+                //Get all object values and convert uppercase char to lowercase char
+                let BrewerValues=Object.values(BreweryData).map(Str=>{
+
+                    if(Str!=null){
+                        StrSplit=Str.split("");
+                        for(let i in StrSplit){
+                            
+                            if(StrSplit[i].charCodeAt(0)>=65 || StrSplit[i].charCodeAt(0)<=90 || StrSplit[i].charCodeAt(0)<=122 || StrSplit[i].charCodeAt(0)>=97){
+                                StrSplit[i]= StrSplit[i].toLowerCase();
+                            }else{
+                                StrSplit[i]= StrSplit[i];
+                            }
+                        }
                     }
-                })
+                    return StrSplit.join("");
+                   
+                });
+
+                //All object values joined together
+                let BrewerValuestring=[];
+                for(let i=0;i<BrewerValues.length;i++){
+                    BrewerValuestring.push(...BrewerValues[i].split(""));
+                }
+
+
+
+
+                // //BreweryName convert to lowercase
+                // let NameSplit=BreweryName.split("").map(Str=>{                    
+                //     if(Str.charCodeAt(0)>=65 || Str.charCodeAt(0)<=90){
+                //         return Str.toLowerCase();
+                //     }else{
+                //         return Str;
+                //     }
+                // })
 
                 //Input value convert to lowercase
                 let InputSplit=Input.value.split("").map(Str=>{
@@ -70,9 +100,10 @@ async function handlesearch(){
                 //Get Brewery Phone Number
                 let BreweryPhoneNumber = DataNullFilter(BreweryData.phone);
 
-                //condition to check input value with Name
-                if(NameSplit.join("").includes(InputSplit.join(""))){
+                //condition to check input value with Brewer object values
+                if(BrewerValuestring.join("").includes(InputSplit.join(""))){
                     
+                    //Create div and content and append to row
                     let BreweryDetails = document.createElement("div");
                     BreweryDetails.className = " col-sm-12 col-lg-5  serch-control m-3 d-flex justify-content-center align-items-center";
                     BreweryDetails.innerHTML = `
@@ -94,7 +125,7 @@ async function handlesearch(){
                 }
                 
             })
-            //condition to check filter done or not
+            //condition to check filtering data availability 
             if(Row.innerHTML.length===0){
                 Row.innerHTML="Result Not found"
 
@@ -111,7 +142,7 @@ async function handlesearch(){
     
 }
 
-//refresh input for every letter type
+//refresh for every letter type
 function refresh(){
     let Input=document.querySelector(".inputvalue");
     if(Input.length!=0){
@@ -119,9 +150,9 @@ function refresh(){
     }
 }
 
-//every input value taken to check availability
-
+//For every input refresh content
 setInterval(refresh,1000);
+
 
 
 //content added to body

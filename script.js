@@ -39,7 +39,7 @@ async function handlesearch(){
                         StrSplit=Str.split("");
                         for(let i in StrSplit){
                             
-                            if(StrSplit[i].charCodeAt(0)>=65 || StrSplit[i].charCodeAt(0)<=90 || StrSplit[i].charCodeAt(0)<=122 || StrSplit[i].charCodeAt(0)>=97){
+                            if(StrSplit[i].charCodeAt(0)>=65 || StrSplit[i].charCodeAt(0)<=90){
                                 StrSplit[i]= StrSplit[i].toLowerCase();
                             }else{
                                 StrSplit[i]= StrSplit[i];
@@ -57,20 +57,9 @@ async function handlesearch(){
                 }
 
 
-
-
-                // //BreweryName convert to lowercase
-                // let NameSplit=BreweryName.split("").map(Str=>{                    
-                //     if(Str.charCodeAt(0)>=65 || Str.charCodeAt(0)<=90){
-                //         return Str.toLowerCase();
-                //     }else{
-                //         return Str;
-                //     }
-                // })
-
                 //Input value convert to lowercase
                 let InputSplit=Input.value.split("").map(Str=>{
-                    if(Str.charCodeAt(0)>=65 || Str.charCodeAt(0)<=90 || Str.charCodeAt(0)<=122 || Str.charCodeAt(0)>=97){
+                    if(Str.charCodeAt(0)>=65 || Str.charCodeAt(0)<=90 ){
                         return Str.toLowerCase();
                     }else{
                         return Str;
@@ -143,16 +132,8 @@ async function handlesearch(){
     
 }
 
-//refresh for every letter type
-function refresh(){
-    let Input=document.querySelector(".inputvalue");
-    if(Input.length!=0){
-        handlesearch();
-    }
-}
-
-//For every input refresh content
-setInterval(refresh,1000);
+//Check input every second
+setInterval(handlesearch,1000);
 
 
 

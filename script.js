@@ -11,6 +11,7 @@ function DataNullFilter(data) {
 }
 
 async function handlesearch(){
+    //To access user input
     let Input=document.querySelector(".inputvalue");
     try{
             // Fetch data from API
